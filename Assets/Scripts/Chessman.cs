@@ -153,6 +153,7 @@ public class Chessman : MonoBehaviour
         while (sc.PositionsOnBoard(x, y) && sc.GetPosition(x, y) == null)
         {
             MovePlateSpawn(x, y);
+
             x += xIncrement;
             y += yIncrement;
         }
@@ -217,6 +218,22 @@ public class Chessman : MonoBehaviour
             if (sc.GetPosition(x, y) == null)
             {
                 MovePlateSpawn(x, y);
+
+                if (this.name == "white_pawn" && yBoard == 1)
+                {
+                    if (sc.GetPosition(x, y + 1) == null)
+                    {
+                        MovePlateSpawn(x, y + 1);
+                    }
+                }
+
+                if (this.name == "black_pawn" && yBoard == 6)
+                {
+                    if (sc.GetPosition(x, y - 1) == null)
+                    {
+                        MovePlateSpawn(x, y - 1);
+                    }
+                }
             }
             //... PositionOnBoard is error ??? but PositionsOnBoard is OK
             if (sc.PositionsOnBoard(x + 1, y) && sc.GetPosition(x + 1, y) != null && sc.GetPosition(x + 1, y).GetComponent<Chessman>().player != player)

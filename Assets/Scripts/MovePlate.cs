@@ -45,6 +45,21 @@ public class MovePlate : MonoBehaviour
         controller.GetComponent<Game>().NextTurn();
 
         reference.GetComponent<Chessman>().DestroyMovePlates();
+
+        Chessman cm = reference.GetComponent<Chessman>();
+
+        // Check for promotion
+        if (cm.name == "white_pawn" && matrixY == 7)
+        {
+            controller.GetComponent<Game>().PromotePawn(reference);
+            return;
+        }
+
+        if (cm.name == "black_pawn" && matrixY == 0)
+        {
+            controller.GetComponent<Game>().PromotePawn(reference);
+            return;
+        }
     }
 
     public void SetCoords(int x, int y)
