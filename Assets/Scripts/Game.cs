@@ -7,6 +7,9 @@ public class Game : MonoBehaviour
 {
     public GameObject chesspiece;
 
+    public GameObject promotionMenu;
+    private GameObject pawnToPromote;
+
     private GameObject[,] positions = new GameObject[8, 8];
     private GameObject[] playerBlack = new GameObject[16];
     private GameObject[] playerWhite = new GameObject[16];
@@ -14,6 +17,29 @@ public class Game : MonoBehaviour
     private string currentPlayer = "white";
 
     private bool gameOver = false;
+
+    private bool isPaused = false;
+
+    public bool IsPaused()
+    {
+        return isPaused;
+    }
+
+    public GameObject pauseMenu;
+
+    public void PauseGame()
+    {
+        isPaused = true;
+        Time.timeScale = 0f;
+        pauseMenu.SetActive(true);
+    }
+
+    public void ResumeGame()
+    {
+        isPaused = false;
+        Time.timeScale = 1f;
+        pauseMenu.SetActive(false);
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -126,5 +152,55 @@ public class Game : MonoBehaviour
 
         GameObject.FindGameObjectWithTag("RestartText").GetComponent<Text>().enabled = true;
 
+    }
+    public void PromotePawn(GameObject pawn)
+    {
+        pawnToPromote = pawn;
+        promotionMenu.SetActive(true);
+    }
+
+    public void PromoteToQueen()
+    {
+        ReplacePawn("queen");
+    }
+
+    public void PromoteToRook()
+    {
+        ReplacePawn("rook");
+    }
+
+    public void PromoteToBishop()
+    {
+        ReplacePawn("bishop");
+    }
+
+    public void PromoteToKnight()
+    {
+        ReplacePawn("knight");
+    }
+
+    void ReplacePawn(string pieceType)
+    {
+        Chessman cm = pawnToPromote.GetComponent<Chessman>();
+
+        int x = cm.GetXBoard();
+        int y = cm.GetYBoard();
+        string player = cm.name.Contains("white") ? "white" : "black";
+
+        Destroy(pawnToPromote);
+
+        string pieceName = player + "_" + pieceType;
+
+        GameObject newPiece = Instantiate(chesspiece, new Vector3(0, 0, -1), Quaternion.identity);
+
+        Chessman newCm = newPiece.GetComponent<Chessman>();
+        newCm.name = pieceName;
+        newCm.SetXBoard(x);
+        newCm.SetYBoard(y);
+        newCm.Activate();
+
+        SetPosition(newPiece);
+
+        promotionMenu.SetActive(false);
     }
 }
