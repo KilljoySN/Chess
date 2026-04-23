@@ -3,6 +3,14 @@ using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+//public enum SpecialMove 
+//{
+    //None = O,
+    //EnPassant,
+   //Castling,
+    //Promotion
+//}
+
 public class Game : MonoBehaviour
 {
     public GameObject chesspiece;
@@ -19,6 +27,12 @@ public class Game : MonoBehaviour
     private bool gameOver = false;
 
     private bool isPaused = false;
+
+    //private SpecialMove specialMove;
+
+    //private List<Vector2Int[]> moveList = new List<Vector2Int[]>();
+
+
 
     public bool IsPaused()
     {
@@ -139,7 +153,7 @@ public class Game : MonoBehaviour
         {
             gameOver = false;
 
-            SceneManager.LoadScene("Game");
+            SceneManager.LoadScene("GameScene");
         }
     }
 
