@@ -167,6 +167,7 @@ public class Game : MonoBehaviour
         GameObject.FindGameObjectWithTag("RestartText").GetComponent<Text>().enabled = true;
 
     }
+    
     public void PromotePawn(GameObject pawn)
     {
         pawnToPromote = pawn;
