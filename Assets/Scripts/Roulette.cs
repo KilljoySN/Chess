@@ -5,13 +5,13 @@ public class Roulette : MonoBehaviour
     public float RotatePower;
     public float StopPower;
 
-    private Ridgidbody2D rbody;
+    private Rigidbody2D rbody;
     int inRotate;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
-        rbody = GetComponent<Ridgidbody2D>();
+        rbody = GetComponent<Rigidbody2D>();
     }
 
     float t;
@@ -52,12 +52,42 @@ public class Roulette : MonoBehaviour
     {
         float rot = transform .eulerAngles.z;
 
-        if (rot > 23 && rot <= 68f)
+        if (rot > 0 && rot <= 45)
         {
             Win(200);
         }
 
-        else if (rot > 68 && rot <= 113f)
+        else if (rot > 45 && rot <= 90)
+        {
+            Win(300);
+        }
+        
+        else if (rot > 90 && rot <= 135)
+        {
+            Win(300);
+        }
+
+        else if (rot > 135 && rot <= 180)
+        {
+            Win(300);
+        }
+
+        else if (rot > 180 && rot <= 225)
+        {
+            Win(300);
+        }
+
+        else if (rot > 225 && rot <= 270)
+        {
+            Win(300);
+        }
+        
+        else if (rot > 270 && rot <= 315)
+        {
+            Win(300);
+        }
+        
+        else if (rot > 315 && rot <= 360)
         {
             Win(300);
         }
