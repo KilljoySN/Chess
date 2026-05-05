@@ -218,4 +218,28 @@ public class Game : MonoBehaviour
 
         promotionMenu.SetActive(false);
     }
+
+    //bool CanCastle(bool kingSide)
+    //{
+        //if (king.hasMoved) return false;
+
+        //Rook rook = kingSide ? rookKingSide : rookQueenSide;
+        //if (rook == null || rook.hasMoved) return false;
+
+        //Vector2Int[] squaresBetween = kingSide
+            //? new[] {king.position, new Vector2Int(5, kingRow), new Vector2Int(6, kingRow) } : new[] {king.position, new Vector2Int(3, kingRow), new Vector2Int(2, kingRow) };
+
+        //foreach (var sq in kingPath)
+            //if (IsSquareAttacked(sq, opponnentColor)) return false;
+
+        //return true;
+    //}
+
+    //void PerformCastle(bool kingSide)
+    //{
+        //king.MoveTo(new Vector2Int(kingSide ? 6 : 2, kingRow));
+
+        //Rook rook = kingSide ? rookKingSide : rookQueenSide;
+        //rook.MoveTo(new Vector2Int(kingSide ? 5 : 3, kingRow));
+    //}
 }

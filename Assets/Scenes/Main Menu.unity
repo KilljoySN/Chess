@@ -1132,7 +1132,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 933.822, y: 465.74222}
+  m_AnchoredPosition: {x: 906, y: 429}
   m_SizeDelta: {x: 75.04019, y: 74.96588}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1280030292
@@ -2068,9 +2068,21 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1988552405}
   serializedVersion: 2
+<<<<<<< Updated upstream
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1698, y: 418, z: 0}
   m_LocalScale: {x: 64.21944, y: 64.21944, z: 1.2843888}
+=======
+<<<<<<< HEAD
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 339, y: -23, z: 0}
+  m_LocalScale: {x: 50, y: 50, z: 1}
+=======
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1698, y: 418, z: 0}
+  m_LocalScale: {x: 64.21944, y: 64.21944, z: 1.2843888}
+>>>>>>> d39b7c6b5c6e4506b08e5d2a213ff8bf830ffb19
+>>>>>>> Stashed changes
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
