@@ -216,41 +216,75 @@ public class Chessman : MonoBehaviour
     public void PawnMovePlate(int x, int y)
     {
         Game sc = controller.GetComponent<Game>();
-        //... PositionOnBoard is error ??? but PositionsOnBoard is OK
+
         if (sc.PositionsOnBoard(x, y))
         {
             if (sc.GetPosition(x, y) == null)
             {
                 MovePlateSpawn(x, y);
 
+        
                 if (this.name == "white_pawn" && yBoard == 1)
                 {
                     if (sc.GetPosition(x, y + 1) == null)
-                    {
-                        MovePlateSpawn(x, y + 1);
-                    }
+                    MovePlateSpawn(x, y + 1);
                 }
 
+        
                 if (this.name == "black_pawn" && yBoard == 6)
                 {
                     if (sc.GetPosition(x, y - 1) == null)
-                    {
-                        MovePlateSpawn(x, y - 1);
-                    }
+                    MovePlateSpawn(x, y - 1);
                 }
             }
-            //... PositionOnBoard is error ??? but PositionsOnBoard is OK
+
+    
             if (sc.PositionsOnBoard(x + 1, y) && sc.GetPosition(x + 1, y) != null && sc.GetPosition(x + 1, y).GetComponent<Chessman>().player != player)
             {
                 MovePlateAttackSpawn(x + 1, y);
             }
-            //... PositionOnBoard is error ??? but PositionsOnBoard is OK
+
+        
             if (sc.PositionsOnBoard(x - 1, y) && sc.GetPosition(x - 1, y) != null && sc.GetPosition(x - 1, y).GetComponent<Chessman>().player != player)
             {
                 MovePlateAttackSpawn(x - 1, y);
             }
+
+
+            if (sc.PositionsOnBoard(x + 1, yBoard) && sc.IsEnPassantTarget(x + 1, yBoard))
+            {
+                MovePlateEnPassantSpawn(x + 1, y); 
+            }
+
+
+            if (sc.PositionsOnBoard(x - 1, yBoard) && sc.IsEnPassantTarget(x - 1, yBoard))
+            {
+                MovePlateEnPassantSpawn(x - 1, y);
+            }
         }
     }
+
+
+    public void MovePlateEnPassantSpawn(int matrixX, int matrixY)
+    {
+        float x = matrixX;
+        float y = matrixY;
+
+        x *= 0.66f;
+        y *= 0.66f;
+
+        x += -2.3f;
+        y += -2.3f;
+
+        GameObject mp = Instantiate(movePlate, new Vector3(x, y, -3.0f), Quaternion.identity);
+
+        MovePlate mpScript = mp.GetComponent<MovePlate>();
+        mpScript.attack = true;
+        mpScript.isEnPassant = true;
+        mpScript.SetReference(gameObject);
+        mpScript.SetCoords(matrixX, matrixY);
+    }
+
 
     public void MovePlateSpawn(int matrixX, int MatrixY)
     {

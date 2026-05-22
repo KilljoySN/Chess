@@ -5,11 +5,13 @@ public class MovePlate : MonoBehaviour
     public GameObject controller;
 
     GameObject reference = null;
+    
 
     int matrixX;
     int matrixY;
 
     public bool attack = false;
+    public bool isEnPassant = false;
 
     public void Start()
     {
@@ -22,17 +24,90 @@ public class MovePlate : MonoBehaviour
     public void OnMouseUp()
     {
         controller = GameObject.FindGameObjectWithTag("GameController");
+        Game game = controller.GetComponent<Game>();
 
         if (attack)
         {
-            GameObject cp = controller.GetComponent<Game>().GetPosition(matrixX, matrixY);
+            if (isEnPassant)
+            {
 
-            if (cp.name == "white_king") controller.GetComponent<Game>().Winner("black");
-            if (cp.name == "black_king") controller.GetComponent<Game>().Winner("white");
+                GameObject captured = game.GetEnPassantTarget();
+                if (captured != null)
+                {
+                    Chessman capturedCm = captured.GetComponent<Chessman>();
 
+                    if (captured.name == "white_king") game.Winner("black");
+                    if (captured.name == "black_king") game.Winner("white");
 
-            Destroy(cp);
+                    game.SetPositionEmptty(capturedCm.GetXBoard(), capturedCm.GetYBoard());
+                    Destroy(captured);
+                }
+            }
+
+            else
+            {
+                GameObject cp = game.GetPosition(matrixX, matrixY);
+                if (cp.name == "white_king") game.Winner("black");
+                if (cp.name == "black_king") game.Winner("white");
+                Destroy(cp);
+            }
         }
+
+        Chessman movingCm = reference.GetComponent<Chessman>();
+        int prevY = movingCm.GetYBoard();
+
+        game.SetPositionEmptty(movingCm.GetXBoard(), movingCm.GetYBoard());
+
+        movingCm.SetXBoard(matrixX);
+        movingCm.SetYBoard(matrixY);
+        movingCm.SetCoords();
+        game.SetPosition(reference);
+
+
+        if ((movingCm.name == "white_pawn" || movingCm.name == "black_pawn") && Mathf.Abs(matrixY - prevY) == 2)
+        {
+            game.SetEnPassantTarget(reference, matrixX, matrixY);
+        }
+
+        else
+        {
+            game.ClearEnPassantTarget();
+        }
+
+        game.NextTurn();
+        reference.GetComponent<Chessman>().DestroyMovePlates();
+
+
+        if (movingCm.name == "white_pawn" && matrixY == 7)
+        {
+            game.PromotePawn(reference);
+            return;
+        }
+
+        if (movingCm.name == "black_pawn" && matrixY == 0)
+        {
+            game.PromotePawn(reference);
+            return;
+        }
+    }
+
+    public void SetCoords(int x, int y)
+    {
+        matrixX = x;
+        matrixY = y;
+    }
+
+    public void SetReference(GameObject obj)
+    {
+        reference = obj;
+    }
+
+    public GameObject GetReference()
+    {
+    return reference;
+    }
+}
+
         //...SetPositionEmpty or SetPositionEmptty??? tt is ok but t is error
         controller.GetComponent<Game>().SetPositionEmptty(reference.GetComponent<Chessman>().GetXBoard(), reference.GetComponent<Chessman>().GetYBoard());
 
@@ -48,7 +123,6 @@ public class MovePlate : MonoBehaviour
 
         Chessman cm = reference.GetComponent<Chessman>();
 
-        // Check for promotion
         if (cm.name == "white_pawn" && matrixY == 7)
         {
             controller.GetComponent<Game>().PromotePawn(reference);

@@ -28,11 +28,42 @@ public class Game : MonoBehaviour
 
     private bool isPaused = false;
 
-    //private SpecialMove specialMove;
+    private GameObject enPassantTarget = null;
+    private int enPassantX = -1;
+    private int enPassantY = -1;
 
-    //private List<Vector2Int[]> moveList = new List<Vector2Int[]>();
+    public void SetEnPassantTarget(GameObject pawn, int x, int y)
+    {
+        enPassantTarget = pawn;
+        enPassantX = x;
+        enPassantY = y;
+    }
+
+    public void ClearEnPassantTarget()
+    {
+        enPassantTarget = null;
+        enPassantX = -1;
+        enPassantY = -1;
+    }
+
+    public bool IsEnPassantTarget(int x, int y)
+    {
+        return enPassantX == x && enPassantY == y;
+    }
+
+    public GameObject GetEnPassantTarget()
+    {
+        return enPassantTarget;
+    }
 
 
+    public void NextTurn()
+    {
+        if (currentPlayer == "white")
+        currentPlayer = "black";
+        else
+        currentPlayer = "white";
+    }
 
     public bool IsPaused()
     {
