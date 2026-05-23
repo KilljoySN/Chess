@@ -1,20 +1,10 @@
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
-//public enum SpecialMove 
-//{
-    //None = O,
-    //EnPassant,
-   //Castling,
-    //Promotion
-//}
 
 public class Game : MonoBehaviour
 {
     public GameObject chesspiece;
-
     public GameObject promotionMenu;
     private GameObject pawnToPromote;
 
@@ -23,9 +13,7 @@ public class Game : MonoBehaviour
     private GameObject[] playerWhite = new GameObject[16];
 
     private string currentPlayer = "white";
-
     private bool gameOver = false;
-
     private bool isPaused = false;
 
     private GameObject enPassantTarget = null;
@@ -37,6 +25,7 @@ public class Game : MonoBehaviour
         enPassantTarget = pawn;
         enPassantX = x;
         enPassantY = y;
+        Debug.Log($"[EnPassant] Cible enregistrée: {pawn.name} à ({x},{y})");
     }
 
     public void ClearEnPassantTarget()
@@ -51,24 +40,9 @@ public class Game : MonoBehaviour
         return enPassantX == x && enPassantY == y;
     }
 
-    public GameObject GetEnPassantTarget()
-    {
-        return enPassantTarget;
-    }
+    public GameObject GetEnPassantTarget() { return enPassantTarget; }
 
-
-    public void NextTurn()
-    {
-        if (currentPlayer == "white")
-        currentPlayer = "black";
-        else
-        currentPlayer = "white";
-    }
-
-    public bool IsPaused()
-    {
-        return isPaused;
-    }
+    public bool IsPaused() { return isPaused; }
 
     public GameObject pauseMenu;
 
@@ -86,31 +60,30 @@ public class Game : MonoBehaviour
         pauseMenu.SetActive(false);
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         playerWhite = new GameObject[]
         {
-            Create("white_rook", 0, 0), Create("white_knight", 1, 0),
+            Create("white_rook", 0, 0),   Create("white_knight", 1, 0),
             Create("white_bishop", 2, 0), Create("white_queen", 3, 0),
-            Create("white_king", 4, 0), Create("white_bishop", 5, 0),
+            Create("white_king", 4, 0),   Create("white_bishop", 5, 0),
             Create("white_knight", 6, 0), Create("white_rook", 7, 0),
-            Create("white_pawn", 0, 1), Create("white_pawn", 1, 1),
-            Create("white_pawn", 2, 1), Create("white_pawn", 3, 1),
-            Create("white_pawn", 4, 1), Create("white_pawn", 5, 1),
-            Create("white_pawn", 6, 1), Create("white_pawn", 7, 1),
+            Create("white_pawn", 0, 1),   Create("white_pawn", 1, 1),
+            Create("white_pawn", 2, 1),   Create("white_pawn", 3, 1),
+            Create("white_pawn", 4, 1),   Create("white_pawn", 5, 1),
+            Create("white_pawn", 6, 1),   Create("white_pawn", 7, 1),
         };
 
         playerBlack = new GameObject[]
         {
-            Create("black_rook", 0, 7), Create("black_knight", 1, 7),
+            Create("black_rook", 0, 7),   Create("black_knight", 1, 7),
             Create("black_bishop", 2, 7), Create("black_queen", 3, 7),
-            Create("black_king", 4, 7), Create("black_bishop", 5, 7),
+            Create("black_king", 4, 7),   Create("black_bishop", 5, 7),
             Create("black_knight", 6, 7), Create("black_rook", 7, 7),
-            Create("black_pawn", 0, 6), Create("black_pawn", 1, 6),
-            Create("black_pawn", 2, 6), Create("black_pawn", 3, 6),
-            Create("black_pawn", 4, 6), Create("black_pawn", 5, 6),
-            Create("black_pawn", 6, 6), Create("black_pawn", 7, 6),
+            Create("black_pawn", 0, 6),   Create("black_pawn", 1, 6),
+            Create("black_pawn", 2, 6),   Create("black_pawn", 3, 6),
+            Create("black_pawn", 4, 6),   Create("black_pawn", 5, 6),
+            Create("black_pawn", 6, 6),   Create("black_pawn", 7, 6),
         };
 
         for (int i = 0; i < playerBlack.Length; i++)
@@ -129,25 +102,17 @@ public class Game : MonoBehaviour
         cm.SetYBoard(y);
         cm.Activate();
         return obj;
-
     }
 
     public void SetPosition(GameObject obj)
     {
         Chessman cm = obj.GetComponent<Chessman>();
-
         positions[cm.GetXBoard(), cm.GetYBoard()] = obj;
     }
 
-    public void SetPositionEmptty(int x, int y)
-    {
-        positions[x, y] = null;
-    }
+    public void SetPositionEmptty(int x, int y) { positions[x, y] = null; }
 
-    public GameObject GetPosition(int x, int y)
-    {
-        return positions[x, y];
-    }
+    public GameObject GetPosition(int x, int y) { return positions[x, y]; }
 
     public bool PositionsOnBoard(int x, int y)
     {
@@ -155,27 +120,13 @@ public class Game : MonoBehaviour
         return true;
     }
 
-    public string GetCurrentPlayer()
-    {
-        return currentPlayer;
-    }
-
-    public bool IsGameOver()
-    {
-        return gameOver;
-    }
+    public string GetCurrentPlayer() { return currentPlayer; }
+    public bool IsGameOver() { return gameOver; }
 
     public void NextTurn()
     {
-        if (currentPlayer == "white")
-        {
-            currentPlayer = "black";
-        }
-
-        else
-        {
-            currentPlayer = "white";
-        }
+        if (currentPlayer == "white") currentPlayer = "black";
+        else currentPlayer = "white";
     }
 
     public void Update()
@@ -183,7 +134,6 @@ public class Game : MonoBehaviour
         if (gameOver == true && Input.GetMouseButtonDown(0))
         {
             gameOver = false;
-
             SceneManager.LoadScene("GameScene");
         }
     }
@@ -191,86 +141,39 @@ public class Game : MonoBehaviour
     public void Winner(string playerWinner)
     {
         gameOver = true;
-
         GameObject.FindGameObjectWithTag("WinnerText").GetComponent<Text>().enabled = true;
         GameObject.FindGameObjectWithTag("WinnerText").GetComponent<Text>().text = playerWinner + " is the winner";
-
         GameObject.FindGameObjectWithTag("RestartText").GetComponent<Text>().enabled = true;
-
     }
-    
+
     public void PromotePawn(GameObject pawn)
     {
         pawnToPromote = pawn;
         promotionMenu.SetActive(true);
     }
 
-    public void PromoteToQueen()
-    {
-        ReplacePawn("queen");
-    }
-
-    public void PromoteToRook()
-    {
-        ReplacePawn("rook");
-    }
-
-    public void PromoteToBishop()
-    {
-        ReplacePawn("bishop");
-    }
-
-    public void PromoteToKnight()
-    {
-        ReplacePawn("knight");
-    }
+    public void PromoteToQueen() { ReplacePawn("queen"); }
+    public void PromoteToRook() { ReplacePawn("rook"); }
+    public void PromoteToBishop() { ReplacePawn("bishop"); }
+    public void PromoteToKnight() { ReplacePawn("knight"); }
 
     void ReplacePawn(string pieceType)
     {
         Chessman cm = pawnToPromote.GetComponent<Chessman>();
-
         int x = cm.GetXBoard();
         int y = cm.GetYBoard();
         string player = cm.name.Contains("white") ? "white" : "black";
 
         Destroy(pawnToPromote);
 
-        string pieceName = player + "_" + pieceType;
-
         GameObject newPiece = Instantiate(chesspiece, new Vector3(0, 0, -1), Quaternion.identity);
-
         Chessman newCm = newPiece.GetComponent<Chessman>();
-        newCm.name = pieceName;
+        newCm.name = player + "_" + pieceType;
         newCm.SetXBoard(x);
         newCm.SetYBoard(y);
         newCm.Activate();
-
         SetPosition(newPiece);
 
         promotionMenu.SetActive(false);
     }
-
-    //bool CanCastle(bool kingSide)
-    //{
-        //if (king.hasMoved) return false;
-
-        //Rook rook = kingSide ? rookKingSide : rookQueenSide;
-        //if (rook == null || rook.hasMoved) return false;
-
-        //Vector2Int[] squaresBetween = kingSide
-            //? new[] {king.position, new Vector2Int(5, kingRow), new Vector2Int(6, kingRow) } : new[] {king.position, new Vector2Int(3, kingRow), new Vector2Int(2, kingRow) };
-
-        //foreach (var sq in kingPath)
-            //if (IsSquareAttacked(sq, opponnentColor)) return false;
-
-        //return true;
-    //}
-
-    //void PerformCastle(bool kingSide)
-    //{
-        //king.MoveTo(new Vector2Int(kingSide ? 6 : 2, kingRow));
-
-        //Rook rook = kingSide ? rookKingSide : rookQueenSide;
-        //rook.MoveTo(new Vector2Int(kingSide ? 5 : 3, kingRow));
-    //}
 }
