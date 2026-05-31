@@ -21,7 +21,6 @@ public class Game : MonoBehaviour
     private int enPassantX = -1;
     private int enPassantY = -1;
 
-    // Tracks which pieces have moved (used for castling eligibility)
     private HashSet<GameObject> movedPieces = new HashSet<GameObject>();
 
     public void SetEnPassantTarget(GameObject pawn, int x, int y)
@@ -29,7 +28,6 @@ public class Game : MonoBehaviour
         enPassantTarget = pawn;
         enPassantX = x;
         enPassantY = y;
-        Debug.Log($"[EnPassant] Cible enregistrée: {pawn.name} à ({x},{y})");
     }
 
     public void ClearEnPassantTarget()
@@ -64,8 +62,6 @@ public class Game : MonoBehaviour
         pauseMenu.SetActive(false);
     }
 
-    // --- Castling: track moved pieces ---
-
     public void MarkAsMoved(GameObject piece)
     {
         movedPieces.Add(piece);
@@ -76,7 +72,6 @@ public class Game : MonoBehaviour
         return movedPieces.Contains(piece);
     }
 
-    // Returns the rook at (x, y) only if it hasn't moved and belongs to the given player
     public GameObject GetUnmovedRook(int x, int y, string player)
     {
         GameObject obj = GetPosition(x, y);

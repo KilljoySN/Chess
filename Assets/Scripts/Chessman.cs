@@ -98,7 +98,7 @@ public class Chessman : MonoBehaviour
             case "black_king":
             case "white_king":
                 SurroundMovePlate();
-                CastlingMovePlate();   // <-- roque
+                CastlingMovePlate();
                 break;
             case "black_rook":
             case "white_rook":
@@ -116,21 +116,14 @@ public class Chessman : MonoBehaviour
         }
     }
 
-    // -------------------------------------------------------
-    // Castling
-    // -------------------------------------------------------
-
     public void CastlingMovePlate()
     {
         Game sc = controller.GetComponent<Game>();
 
-        // King must not have moved
         if (sc.HasMoved(gameObject)) return;
 
-        int y = yBoard; // 0 for white, 7 for black
+        int y = yBoard;
 
-        // --- Kingside (petit roque) ---
-        // Squares x=5 and x=6 must be empty, rook at x=7 must not have moved
         if (sc.GetPosition(5, y) == null &&
             sc.GetPosition(6, y) == null &&
             sc.GetUnmovedRook(7, y, player) != null)
@@ -138,8 +131,6 @@ public class Chessman : MonoBehaviour
             MovePlateCastlingSpawn(6, y, true);
         }
 
-        // --- Queenside (grand roque) ---
-        // Squares x=1, x=2, x=3 must be empty, rook at x=0 must not have moved
         if (sc.GetPosition(1, y) == null &&
             sc.GetPosition(2, y) == null &&
             sc.GetPosition(3, y) == null &&
@@ -149,9 +140,6 @@ public class Chessman : MonoBehaviour
         }
     }
 
-    // Spawns a move plate at the king's destination for castling.
-    // kingside = true  → petit roque  (king goes to x=6)
-    // kingside = false → grand roque  (king goes to x=2)
     public void MovePlateCastlingSpawn(int destX, int destY, bool kingside)
     {
         float wx = destX * 0.66f - 2.3f;
@@ -164,8 +152,6 @@ public class Chessman : MonoBehaviour
         mpScript.SetReference(gameObject);
         mpScript.SetCoords(destX, destY);
     }
-
-    // -------------------------------------------------------
 
     public void LineMovePlate(int xIncrement, int yIncrement)
     {

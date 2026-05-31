@@ -10,9 +10,8 @@ public class MovePlate : MonoBehaviour
     public bool attack = false;
     public bool isEnPassant = false;
 
-    // Castling flags
     public bool isCastling = false;
-    public bool castlingKingside = false; // true = petit roque, false = grand roque
+    public bool castlingKingside = false;
 
     public void Start()
     {
@@ -20,7 +19,6 @@ public class MovePlate : MonoBehaviour
         {
             gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.0f, 0.0f, 1.0f);
         }
-        // Optional: tint castling squares in a distinct colour (gold)
         if (isCastling)
         {
             gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.85f, 0.0f, 1.0f);
@@ -58,7 +56,6 @@ public class MovePlate : MonoBehaviour
             }
         }
 
-        // Move the king
         Chessman movingCm = reference.GetComponent<Chessman>();
         int prevY = movingCm.GetYBoard();
         game.SetPositionEmptty(movingCm.GetXBoard(), movingCm.GetYBoard());
@@ -67,18 +64,15 @@ public class MovePlate : MonoBehaviour
         movingCm.SetCoords();
         game.SetPosition(reference);
 
-        // Mark the king as moved
         game.MarkAsMoved(reference);
 
-        // --- Castling: move the rook too ---
         if (isCastling)
         {
             string player = movingCm.name.Contains("white") ? "white" : "black";
-            int row = matrixY; // same row as king
+            int row = matrixY;
 
             if (castlingKingside)
             {
-                // Petit roque: rook from x=7 goes to x=5
                 GameObject rook = game.GetPosition(7, row);
                 if (rook != null)
                 {
@@ -93,7 +87,6 @@ public class MovePlate : MonoBehaviour
             }
             else
             {
-                // Grand roque: rook from x=0 goes to x=3
                 GameObject rook = game.GetPosition(0, row);
                 if (rook != null)
                 {
@@ -108,7 +101,6 @@ public class MovePlate : MonoBehaviour
             }
         }
 
-        // --- En passant housekeeping ---
         if ((movingCm.name == "white_pawn" || movingCm.name == "black_pawn")
             && Mathf.Abs(matrixY - prevY) == 2)
         {
@@ -129,7 +121,6 @@ public class MovePlate : MonoBehaviour
         game.NextTurn();
         reference.GetComponent<Chessman>().DestroyMovePlates();
 
-        // Promotion check
         if (movingCm.name == "white_pawn" && matrixY == 7)
         {
             game.PromotePawn(reference);
