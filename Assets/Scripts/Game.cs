@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class Game : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class Game : MonoBehaviour
     private GameObject enPassantTarget = null;
     private int enPassantX = -1;
     private int enPassantY = -1;
+
+    // Tracks which pieces have moved (used for castling eligibility)
+    private HashSet<GameObject> movedPieces = new HashSet<GameObject>();
 
     public void SetEnPassantTarget(GameObject pawn, int x, int y)
     {
@@ -58,6 +62,31 @@ public class Game : MonoBehaviour
         isPaused = false;
         Time.timeScale = 1f;
         pauseMenu.SetActive(false);
+    }
+
+    // --- Castling: track moved pieces ---
+
+    public void MarkAsMoved(GameObject piece)
+    {
+        movedPieces.Add(piece);
+    }
+
+    public bool HasMoved(GameObject piece)
+    {
+        return movedPieces.Contains(piece);
+    }
+
+    // Returns the rook at (x, y) only if it hasn't moved and belongs to the given player
+    public GameObject GetUnmovedRook(int x, int y, string player)
+    {
+        GameObject obj = GetPosition(x, y);
+        if (obj == null) return null;
+        Chessman cm = obj.GetComponent<Chessman>();
+        if (cm == null) return null;
+        string expectedName = player + "_rook";
+        if (obj.name != expectedName) return null;
+        if (HasMoved(obj)) return null;
+        return obj;
     }
 
     void Start()

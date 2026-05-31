@@ -6,14 +6,24 @@ public class MovePlate : MonoBehaviour
     GameObject reference = null;
     int matrixX;
     int matrixY;
+
     public bool attack = false;
     public bool isEnPassant = false;
+
+    // Castling flags
+    public bool isCastling = false;
+    public bool castlingKingside = false; // true = petit roque, false = grand roque
 
     public void Start()
     {
         if (attack)
         {
             gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.0f, 0.0f, 1.0f);
+        }
+        // Optional: tint castling squares in a distinct colour (gold)
+        if (isCastling)
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.85f, 0.0f, 1.0f);
         }
     }
 
@@ -48,16 +58,57 @@ public class MovePlate : MonoBehaviour
             }
         }
 
+        // Move the king
         Chessman movingCm = reference.GetComponent<Chessman>();
         int prevY = movingCm.GetYBoard();
-
         game.SetPositionEmptty(movingCm.GetXBoard(), movingCm.GetYBoard());
         movingCm.SetXBoard(matrixX);
         movingCm.SetYBoard(matrixY);
         movingCm.SetCoords();
         game.SetPosition(reference);
 
+        // Mark the king as moved
+        game.MarkAsMoved(reference);
 
+        // --- Castling: move the rook too ---
+        if (isCastling)
+        {
+            string player = movingCm.name.Contains("white") ? "white" : "black";
+            int row = matrixY; // same row as king
+
+            if (castlingKingside)
+            {
+                // Petit roque: rook from x=7 goes to x=5
+                GameObject rook = game.GetPosition(7, row);
+                if (rook != null)
+                {
+                    Chessman rookCm = rook.GetComponent<Chessman>();
+                    game.SetPositionEmptty(7, row);
+                    rookCm.SetXBoard(5);
+                    rookCm.SetYBoard(row);
+                    rookCm.SetCoords();
+                    game.SetPosition(rook);
+                    game.MarkAsMoved(rook);
+                }
+            }
+            else
+            {
+                // Grand roque: rook from x=0 goes to x=3
+                GameObject rook = game.GetPosition(0, row);
+                if (rook != null)
+                {
+                    Chessman rookCm = rook.GetComponent<Chessman>();
+                    game.SetPositionEmptty(0, row);
+                    rookCm.SetXBoard(3);
+                    rookCm.SetYBoard(row);
+                    rookCm.SetCoords();
+                    game.SetPosition(rook);
+                    game.MarkAsMoved(rook);
+                }
+            }
+        }
+
+        // --- En passant housekeeping ---
         if ((movingCm.name == "white_pawn" || movingCm.name == "black_pawn")
             && Mathf.Abs(matrixY - prevY) == 2)
         {
@@ -70,17 +121,15 @@ public class MovePlate : MonoBehaviour
             {
                 string movingPlayer = movingCm.name.Contains("white") ? "white" : "black";
                 string targetPlayer = currentTarget.name.Contains("white") ? "white" : "black";
-
                 if (movingPlayer == targetPlayer)
-                {
                     game.ClearEnPassantTarget();
-                }
             }
         }
 
         game.NextTurn();
         reference.GetComponent<Chessman>().DestroyMovePlates();
 
+        // Promotion check
         if (movingCm.name == "white_pawn" && matrixY == 7)
         {
             game.PromotePawn(reference);
