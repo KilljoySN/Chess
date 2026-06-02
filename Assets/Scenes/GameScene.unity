@@ -150,6 +150,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game
   chesspiece: {fileID: 2365980223506625698, guid: 16adb3661f25cac4a9851143e743f4a4, type: 3}
   promotionMenu: {fileID: 807004324}
+  promoQueenImage: {fileID: 2125006798}
+  promoRookImage: {fileID: 1947461031}
+  promoBishopImage: {fileID: 889118493}
+  promoKnightImage: {fileID: 1008573189}
+  white_queen_sprite: {fileID: 7270707491364550308, guid: 94cb29fe6747c9b44ad74faaafc6269e, type: 3}
+  white_rook_sprite: {fileID: -8948728166497563328, guid: 0cf75330e05407541bdc2090a3009f40, type: 3}
+  white_bishop_sprite: {fileID: 7560534232159598683, guid: 1f271e37d97dd1e4da6a68c32e784c1d, type: 3}
+  white_knight_sprite: {fileID: 8769669200613306614, guid: b525ce27b900b4a48bca73e1f7246d37, type: 3}
+  black_queen_sprite: {fileID: -2628853326628446179, guid: a591c1a442005c54898be3f9d9ed1ed0, type: 3}
+  black_rook_sprite: {fileID: -7587791273309554880, guid: cb4ee3ae182199e4e969f8df782271a2, type: 3}
+  black_bishop_sprite: {fileID: -6414592721767173361, guid: 1138e42cffa8848459f8a0d2dbc6b0d0, type: 3}
+  black_knight_sprite: {fileID: -334450713805299198, guid: 6a5b7ad0fb5f8ac4b9e00fc728afd67b, type: 3}
   pauseMenu: {fileID: 350345675}
 --- !u!4 &57941708
 Transform:

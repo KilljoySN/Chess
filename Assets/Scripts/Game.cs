@@ -9,6 +9,21 @@ public class Game : MonoBehaviour
     public GameObject promotionMenu;
     private GameObject pawnToPromote;
 
+    public Image promoQueenImage;
+    public Image promoRookImage;
+    public Image promoBishopImage;
+    public Image promoKnightImage;
+
+    public Sprite white_queen_sprite;
+    public Sprite white_rook_sprite;
+    public Sprite white_bishop_sprite;
+    public Sprite white_knight_sprite;
+
+    public Sprite black_queen_sprite;
+    public Sprite black_rook_sprite;
+    public Sprite black_bishop_sprite;
+    public Sprite black_knight_sprite;
+
     private GameObject[,] positions = new GameObject[8, 8];
     private GameObject[] playerBlack = new GameObject[16];
     private GameObject[] playerWhite = new GameObject[16];
@@ -45,6 +60,7 @@ public class Game : MonoBehaviour
     public GameObject GetEnPassantTarget() { return enPassantTarget; }
 
     public bool IsPaused() { return isPaused; }
+    public bool IsPromoting() { return promotionMenu != null && promotionMenu.activeSelf; }
 
     public GameObject pauseMenu;
 
@@ -173,6 +189,14 @@ public class Game : MonoBehaviour
     public void PromotePawn(GameObject pawn)
     {
         pawnToPromote = pawn;
+
+        bool isWhite = pawn.name.Contains("white");
+
+        if (promoQueenImage != null) promoQueenImage.sprite = isWhite ? white_queen_sprite : black_queen_sprite;
+        if (promoRookImage != null) promoRookImage.sprite = isWhite ? white_rook_sprite : black_rook_sprite;
+        if (promoBishopImage != null) promoBishopImage.sprite = isWhite ? white_bishop_sprite : black_bishop_sprite;
+        if (promoKnightImage != null) promoKnightImage.sprite = isWhite ? white_knight_sprite : black_knight_sprite;
+
         promotionMenu.SetActive(true);
     }
 
