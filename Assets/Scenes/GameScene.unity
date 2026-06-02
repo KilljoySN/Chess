@@ -640,19 +640,19 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 807004324}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -9066.895}
+  m_LocalScale: {x: 100.74327, y: 100.74327, z: 100.74327}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2125006796}
   - {fileID: 1947461029}
   - {fileID: 889118491}
   - {fileID: 1008573187}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1281740167}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -5.29, y: -0.03}
+  m_AnchoredPosition: {x: -532.9297, y: -3.0222952}
   m_SizeDelta: {x: 4.0522, y: 3.8788}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &807004326
@@ -719,7 +719,7 @@ Canvas:
   m_GameObject: {fileID: 807004324}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 2
+  m_RenderMode: 1
   m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -1037,7 +1037,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 889118493}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 57941707}
+        m_TargetAssemblyTypeName: Game, Assembly-CSharp
+        m_MethodName: PromoteToBishop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &889118493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1235,7 +1247,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1008573189}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 57941707}
+        m_TargetAssemblyTypeName: Game, Assembly-CSharp
+        m_MethodName: PromoteToKnight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1008573189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1716,6 +1740,7 @@ RectTransform:
   - {fileID: 1771935740}
   - {fileID: 350345676}
   - {fileID: 423361392}
+  - {fileID: 807004325}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2112,7 +2137,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1947461031}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 57941707}
+        m_TargetAssemblyTypeName: Game, Assembly-CSharp
+        m_MethodName: PromoteToRook
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1947461031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2232,7 +2269,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2125006798}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 57941707}
+        m_TargetAssemblyTypeName: Game, Assembly-CSharp
+        m_MethodName: PromoteToQueen
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2125006798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2281,4 +2330,3 @@ SceneRoots:
   - {fileID: 1093804433}
   - {fileID: 885836793}
   - {fileID: 1281740167}
-  - {fileID: 807004325}
