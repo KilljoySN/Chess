@@ -198,9 +198,6 @@ public class Game : MonoBehaviour
         if (promoKnightImage != null) promoKnightImage.sprite = isWhite ? white_knight_sprite : black_knight_sprite;
 
         promotionMenu.SetActive(true);
-
-        Debug.Log("PromotePawn appelé pour: " + pawn.name);
-        pawnToPromote = pawn;
     }
 
     public void PromoteToQueen() { ReplacePawn("queen"); }
