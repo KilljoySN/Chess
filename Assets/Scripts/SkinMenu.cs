@@ -8,18 +8,30 @@ public class SkinMenu : MonoBehaviour
     public RectTransform previewContainer;
 
     [Header("Card Appearance")]
-    [Tooltip("Width/height of each skin card.")]
     public Vector2 cardSize = new Vector2(120f, 160f);
-
-    [Tooltip("Color applied to the card of the currently active skin.")]
     public Color selectedColor = new Color(0.2f, 0.8f, 0.2f, 1f);
-
-    [Tooltip("Color for all other cards.")]
     public Color defaultColor = new Color(1f, 1f, 1f, 1f);
+
+    [Header("Close Button (optional)")]
+    [Tooltip("Wire up a Close/X button in the menu to call HideMenu().")]
+    public Button closeButton;
+
+    // Auto-found at runtime — no need to assign in Inspector
+    private SkinMenuToggle toggle;
 
     private void OnEnable()
     {
+        // Find the toggle on the button that opens this menu
+        if (toggle == null)
+            toggle = FindFirstObjectByType<SkinMenuToggle>();
+
         BuildCards();
+
+        if (closeButton != null)
+        {
+            closeButton.onClick.RemoveAllListeners();
+            closeButton.onClick.AddListener(HideMenu);
+        }
     }
 
     public void ShowMenu()
@@ -31,6 +43,9 @@ public class SkinMenu : MonoBehaviour
     {
         ClearCards();
         gameObject.SetActive(false);
+
+        // Tell the toggle so the game resumes
+        toggle?.OnSkinChosen();
     }
 
     private void BuildCards()
@@ -55,6 +70,7 @@ public class SkinMenu : MonoBehaviour
             SkinData skin = sm.availableSkins[i];
             int capturedIndex = i;
 
+            // ?? Card root ??????????????????????????????????????????????????
             GameObject card = new GameObject("SkinCard_" + i,
                 typeof(RectTransform), typeof(Image));
             card.transform.SetParent(previewContainer, false);
@@ -65,6 +81,7 @@ public class SkinMenu : MonoBehaviour
             Image cardBg = card.GetComponent<Image>();
             cardBg.color = (i == sm.CurrentIndex) ? selectedColor : defaultColor;
 
+            // ?? Preview image ??????????????????????????????????????????????
             GameObject imgObj = new GameObject("Preview",
                 typeof(RectTransform), typeof(Image));
             imgObj.transform.SetParent(card.transform, false);
@@ -86,6 +103,7 @@ public class SkinMenu : MonoBehaviour
                 previewImg.color = new Color(0.7f, 0.7f, 0.7f, 1f);
             }
 
+            // ?? Skin name label ????????????????????????????????????????????
             GameObject labelObj = new GameObject("Label",
                 typeof(RectTransform), typeof(Text));
             labelObj.transform.SetParent(card.transform, false);
@@ -103,13 +121,14 @@ public class SkinMenu : MonoBehaviour
             label.fontSize = 13;
             label.color = Color.black;
 
+            // ?? Select button ??????????????????????????????????????????????
             GameObject btnObj = new GameObject("SelectButton",
                 typeof(RectTransform), typeof(Image), typeof(Button));
             btnObj.transform.SetParent(card.transform, false);
 
             RectTransform btnRect = btnObj.GetComponent<RectTransform>();
             btnRect.anchorMin = new Vector2(0.1f, 0.02f);
-            btnRect.anchorMax = new Vector2(0.9f, 0.2f);
+            btnRect.anchorMax = new Vector2(0.9f, 0.20f);
             btnRect.offsetMin = Vector2.zero;
             btnRect.offsetMax = Vector2.zero;
 
@@ -120,6 +139,7 @@ public class SkinMenu : MonoBehaviour
             btn.targetGraphic = btnImg;
             btn.onClick.AddListener(() => OnSkinSelected(capturedIndex));
 
+            // Button label
             GameObject btnLabelObj = new GameObject("ButtonLabel",
                 typeof(RectTransform), typeof(Text));
             btnLabelObj.transform.SetParent(btnObj.transform, false);
@@ -144,18 +164,18 @@ public class SkinMenu : MonoBehaviour
         SkinManager sm = SkinManager.Instance;
         if (sm == null) return;
 
-        sm.SelectSkin(index);
+        sm.SelectSkin(index);  // applies skin to all pieces instantly via ApplySkinToAllPieces()
 
-        BuildCards();
+        BuildCards();          // refresh card highlights / button labels
+
+        // Auto-close after a short moment so the player can see the board update
+        Invoke(nameof(HideMenu), 0.4f);
     }
 
     private void ClearCards()
     {
         if (previewContainer == null) return;
-
         for (int i = previewContainer.childCount - 1; i >= 0; i--)
-        {
             Destroy(previewContainer.GetChild(i).gameObject);
-        }
     }
 }

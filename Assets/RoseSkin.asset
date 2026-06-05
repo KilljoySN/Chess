@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c957e1d402938d043a84898cd8358cf0, type: 3}
+  m_Name: RoseSkin
+  m_EditorClassIdentifier: Assembly-CSharp::SkinData
+  skinName: Rose
+  previewSprite: {fileID: -3792998861040722889, guid: 1c17f6b65866b224b937dd6fb410c843, type: 3}
+  white_pawn: {fileID: 5580225292014371162, guid: eb7b0e0e66d5e0947b45078f954adc58, type: 3}
+  white_rook: {fileID: -8948728166497563328, guid: 175fb145bb7b92f428895acb3c5f82ec, type: 3}
+  white_knight: {fileID: 8769669200613306614, guid: 4a3ed1c5c4472ac4fb7770a4c311ea38, type: 3}
+  white_bishop: {fileID: 7560534232159598683, guid: 6964bf26b4931f64dbfdf414bf35710d, type: 3}
+  white_queen: {fileID: 7270707491364550308, guid: 9ce283a3ecdaa86418a6ee6b0e238de1, type: 3}
+  white_king: {fileID: -3792998861040722889, guid: 1c17f6b65866b224b937dd6fb410c843, type: 3}
+  black_pawn: {fileID: -4341603147912474925, guid: 7443ae8ddeb29694e92b9e0c98bc6bf5, type: 3}
+  black_rook: {fileID: -7587791273309554880, guid: 95211e12f86b67e4f9e100bdd9754184, type: 3}
+  black_knight: {fileID: -334450713805299198, guid: 967f60c53594d7747b6044a5be7a5604, type: 3}
+  black_bishop: {fileID: -6414592721767173361, guid: ff30a7b25e7ac4246833d4d256ab5d61, type: 3}
+  black_queen: {fileID: -2628853326628446179, guid: 7ed9661f295e00e41b365de2c83b9b01, type: 3}
+  black_king: {fileID: -641104846605737351, guid: 8cf288abb225f064991164ceb44e8a74, type: 3}
