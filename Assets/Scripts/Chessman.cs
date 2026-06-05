@@ -10,15 +10,8 @@ public class Chessman : MonoBehaviour
 
     private string player;
 
-    // ---------------------------------------------------------------
-    // Fallback sprites (used when no SkinManager / skin has no sprite)
-    // ---------------------------------------------------------------
     public Sprite black_queen, black_knight, black_bishop, black_king, black_rook, black_pawn;
     public Sprite white_queen, white_knight, white_bishop, white_king, white_rook, white_pawn;
-
-    // ---------------------------------------------------------------
-    // Activation
-    // ---------------------------------------------------------------
 
     public void Activate()
     {
@@ -26,10 +19,8 @@ public class Chessman : MonoBehaviour
 
         SetCoords();
 
-        // Determine player colour from name
         player = this.name.StartsWith("white") ? "white" : "black";
 
-        // Try to apply the active skin; fall back to the inspector sprites
         if (SkinManager.Instance != null && SkinManager.Instance.CurrentSkin != null)
         {
             ApplySkin(SkinManager.Instance.CurrentSkin);
@@ -40,11 +31,6 @@ public class Chessman : MonoBehaviour
         }
     }
 
-    // ---------------------------------------------------------------
-    // Skin API
-    // ---------------------------------------------------------------
-
-    /// <summary>Apply a SkinData to this piece (called by SkinManager too).</summary>
     public void ApplySkin(SkinData skin)
     {
         if (skin == null) return;
@@ -57,14 +43,9 @@ public class Chessman : MonoBehaviour
         }
         else
         {
-            // Skin is missing this sprite – fall back gracefully
             ApplyFallbackSprite();
         }
     }
-
-    // ---------------------------------------------------------------
-    // Coordinates
-    // ---------------------------------------------------------------
 
     public void SetCoords()
     {
@@ -85,10 +66,6 @@ public class Chessman : MonoBehaviour
     public void SetXBoard(int x) { xBoard = x; }
     public void SetYBoard(int y) { yBoard = y; }
 
-    // ---------------------------------------------------------------
-    // Mouse interaction
-    // ---------------------------------------------------------------
-
     private void OnMouseUp()
     {
         Game game = controller.GetComponent<Game>();
@@ -101,10 +78,6 @@ public class Chessman : MonoBehaviour
             InitiateMovePlates();
         }
     }
-
-    // ---------------------------------------------------------------
-    // Move plates
-    // ---------------------------------------------------------------
 
     public void DestroyMovePlates()
     {
@@ -261,10 +234,6 @@ public class Chessman : MonoBehaviour
         }
     }
 
-    // ---------------------------------------------------------------
-    // Move plate spawners
-    // ---------------------------------------------------------------
-
     public void MovePlateEnPassantSpawn(int matrixX, int matrixY)
     {
         GameObject mp = Instantiate(movePlate, BoardToWorld(matrixX, matrixY), Quaternion.identity);
@@ -291,10 +260,6 @@ public class Chessman : MonoBehaviour
         mpScript.SetReference(gameObject);
         mpScript.SetCoords(matrixX, matrixY);
     }
-
-    // ---------------------------------------------------------------
-    // Helpers
-    // ---------------------------------------------------------------
 
     private Vector3 BoardToWorld(int x, int y)
     {

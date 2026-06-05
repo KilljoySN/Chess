@@ -1,9 +1,6 @@
 using UnityEngine;
 
-/// <summary>
-/// Create one asset per skin via Assets > Create > Chess > Skin.
-/// Assign all 12 piece sprites and give it a display name.
-/// </summary>
+
 [CreateAssetMenu(fileName = "NewSkin", menuName = "Chess/Skin")]
 public class SkinData : ScriptableObject
 {
@@ -29,7 +26,6 @@ public class SkinData : ScriptableObject
     public Sprite black_queen;
     public Sprite black_king;
 
-    /// <summary>Returns the correct sprite for a piece by its GameObject name.</summary>
     public Sprite GetSprite(string pieceName)
     {
         switch (pieceName)
